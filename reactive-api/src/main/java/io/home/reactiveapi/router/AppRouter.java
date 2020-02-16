@@ -42,6 +42,9 @@ public class AppRouter {
                         handler::createNewEmployee)
                 .andRoute(
                         DELETE("/emp/{id}").and(RequestPredicates.accept(MediaType.APPLICATION_JSON)),
-                        handler::deleteEmployee);
+                        handler::deleteEmployee)
+                .andRoute(
+                        GET("/emp/{id}/events").and(RequestPredicates.accept(MediaType.APPLICATION_JSON)),
+                        handler::getEmployeeEvents);
     }
 }
