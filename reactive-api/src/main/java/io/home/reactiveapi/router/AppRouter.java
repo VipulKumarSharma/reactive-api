@@ -29,6 +29,8 @@ public class AppRouter {
                 .andRoute(
                         GET("/appName"),
                         appHandler::getAppName)
+
+                /* Employee Endpoints */
                 .andRoute(
                         GET("/emp").and(RequestPredicates.accept(MediaType.APPLICATION_JSON)),
                         handler::getAllEmployees)

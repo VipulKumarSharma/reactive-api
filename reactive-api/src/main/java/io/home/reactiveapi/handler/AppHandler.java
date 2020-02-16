@@ -1,6 +1,5 @@
 package io.home.reactiveapi.handler;
 
-import io.home.reactiveapi.persistence.Employee;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
