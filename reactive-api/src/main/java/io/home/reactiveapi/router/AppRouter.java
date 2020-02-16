@@ -24,27 +24,27 @@ public class AppRouter {
     public RouterFunction<ServerResponse> route(EmployeeHandler handler, AppHandler appHandler) {
         return RouterFunctions
                 .route(
-                        GET("/"),
+                        RequestPredicates.GET("/"),
                         req -> ServerResponse.ok().body(Mono.justOrEmpty(appName+" is in running state"), String.class))
                 .andRoute(
-                        GET("/appName"),
+                        RequestPredicates.GET("/appName"),
                         appHandler::getAppName)
 
                 /* Employee Endpoints */
                 .andRoute(
-                        GET("/emp").and(RequestPredicates.accept(MediaType.APPLICATION_JSON)),
+                        RequestPredicates.GET("/emp").and(RequestPredicates.accept(MediaType.APPLICATION_JSON)),
                         handler::getAllEmployees)
                 .andRoute(
-                        GET("/emp/{id}").and(RequestPredicates.accept(MediaType.APPLICATION_JSON)),
+                        RequestPredicates.GET("/emp/{id}").and(RequestPredicates.accept(MediaType.APPLICATION_JSON)),
                         handler::getEmployeeById)
                 .andRoute(
-                        POST("/emp").and(RequestPredicates.accept(MediaType.APPLICATION_JSON)),
+                        RequestPredicates.POST("/emp").and(RequestPredicates.accept(MediaType.APPLICATION_JSON)),
                         handler::createNewEmployee)
                 .andRoute(
-                        DELETE("/emp/{id}").and(RequestPredicates.accept(MediaType.APPLICATION_JSON)),
+                        RequestPredicates.DELETE("/emp/{id}").and(RequestPredicates.accept(MediaType.APPLICATION_JSON)),
                         handler::deleteEmployee)
                 .andRoute(
-                        GET("/emp/{id}/events").and(RequestPredicates.accept(MediaType.APPLICATION_JSON)),
+                        RequestPredicates.GET("/emp/{id}/events").and(RequestPredicates.accept(MediaType.APPLICATION_JSON)),
                         handler::getEmployeeEvents);
     }
 }
