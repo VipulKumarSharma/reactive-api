@@ -31,11 +31,15 @@ public class EmployeeHandler {
     }
 
     public Mono<ServerResponse> getEmployeeById(ServerRequest request) {
-        long id = Long.parseLong(request.pathVariable("id"));
+        long id = Long.valueOf(request.pathVariable("id"));
 
-        return ServerResponse.ok()
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(employeeRepository.findById(id), Employee.class);
+        return employeeRepository.findById(id)
+                .flatMap(e -> ServerResponse
+                        .ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(e, Employee.class)
+                )
+                .switchIfEmpty(ServerResponse.notFound().build());
     }
 
     public Mono<ServerResponse> createNewEmployee(ServerRequest request) {
