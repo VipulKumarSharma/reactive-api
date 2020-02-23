@@ -1,6 +1,7 @@
 package io.home.reactiveapi.router;
 
 import io.home.reactiveapi.handler.AppHandler;
+import io.home.reactiveapi.handler.DataHandler;
 import io.home.reactiveapi.handler.EmployeeHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +22,7 @@ public class AppRouter {
     private String appName;
 
     @Bean
-    public RouterFunction<ServerResponse> route(EmployeeHandler handler, AppHandler appHandler) {
+    public RouterFunction<ServerResponse> route(EmployeeHandler handler, AppHandler appHandler, DataHandler dataHandler) {
         return RouterFunctions
                 .route(
                         RequestPredicates.GET("/"),
@@ -29,6 +30,14 @@ public class AppRouter {
                 .andRoute(
                         RequestPredicates.GET("/appName"),
                         appHandler::getAppName)
+
+                /* Data Handling Endpoints */
+                .andRoute(
+                        RequestPredicates.GET("/data"),
+                        dataHandler::getData)
+                .andRoute(
+                        RequestPredicates.GET("/{uid}/data/{price}"),
+                        dataHandler::getRestaurantsByMaxPrice)
 
                 /* Employee Endpoints */
                 .andRoute(
